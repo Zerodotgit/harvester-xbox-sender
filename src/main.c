@@ -18,7 +18,12 @@ void sigintHandler(int sig) {
     keepRunning = 0;
 }
 
+
+
 int main() {
+
+    int x = 1;
+
     signal(SIGINT, sigintHandler);
 
     struct libevdev *xbox = NULL;
@@ -46,9 +51,18 @@ int main() {
 
         int rc = libevdev_next_event(xbox, LIBEVDEV_READ_FLAG_NORMAL, &ev);
         if (rc == LIBEVDEV_READ_STATUS_SUCCESS) {
+            if (ev.code == 17 && ev.value == -1) {
+                x = 1;
+                printf("前进\n");
+            }
+            if (ev.code == 17 && ev.value == 1) {
+                x = -1;
+                printf("后退\n");
+            }
+
             if (ev.code == 9) {
-                snprintf(message, BUFFER_SIZE, "%d", ev.value);
-                printf("ev.value:%d\n", ev.value);
+                snprintf(message, BUFFER_SIZE, "%d", ev.value * x);
+                printf("ev.value:%d\n", ev.value * x);
 
                 ssize_t bytesSend = send(sock, message, strlen(message), 0);
                 if (bytesSend < 0) {
@@ -63,7 +77,7 @@ int main() {
                     break;
                 }
                 buffer[bytesRead] = '\0';
-                printf("Server:%s", buffer);
+                printf("Server:%s\n", buffer);
             }
         }
 

@@ -6,7 +6,7 @@
 #include <linux/input.h>
 #include <unistd.h>
 
-#define XBOX_DEVICE_FILE "/dev/input/event12"
+#define XBOX_DEVICE_FILE "/dev/input/event27"
 
 //open Xbox controller device file
 struct libevdev* openXboxController(struct libevdev *xbox) {
