@@ -3,10 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <linux/input.h>
 #include <unistd.h>
 
-#define XBOX_DEVICE_FILE "/dev/input/event27"
+#define XBOX_DEVICE_FILE "/dev/input/event13"
 
 //open Xbox controller device file
 struct libevdev* openXboxController(struct libevdev *xbox) {
